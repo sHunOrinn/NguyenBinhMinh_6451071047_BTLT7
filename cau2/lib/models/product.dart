@@ -18,14 +18,18 @@ class Product {
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
+    final dynamic rawRating = json['rating'];
+
     return Product(
-      id: json['id'],
-      title: json['title'],
-      price: (json['price'] as num).toDouble(),
-      description: json['description'],
-      category: json['category'],
-      image: json['image'],
-      rating: Rating.fromJson(json['rating']),
+      id: int.tryParse(json['id'].toString()) ?? 0,
+      title: json['title']?.toString() ?? '',
+      price: double.tryParse(json['price'].toString()) ?? 0,
+      description: json['description']?.toString() ?? '',
+      category: json['category']?.toString() ?? '',
+      image: json['image']?.toString() ?? '',
+      rating: rawRating is Map<String, dynamic>
+          ? Rating.fromJson(rawRating)
+          : const Rating(rate: 0, count: 0),
     );
   }
 }
@@ -34,15 +38,15 @@ class Rating {
   final double rate;
   final int count;
 
-  Rating({
+  const Rating({
     required this.rate,
     required this.count,
   });
 
   factory Rating.fromJson(Map<String, dynamic> json) {
     return Rating(
-      rate: (json['rate'] as num).toDouble(),
-      count: json['count'],
+      rate: double.tryParse(json['rate'].toString()) ?? 0,
+      count: int.tryParse(json['count'].toString()) ?? 0,
     );
   }
 }

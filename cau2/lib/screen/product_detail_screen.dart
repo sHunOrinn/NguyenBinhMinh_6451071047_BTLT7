@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({
     super.key,
-    this.productId = 1,
+    this.productId = 2,
   });
 
   final int productId;
@@ -51,6 +51,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Text(
+                    snapshot.error.toString(),
+                    style: const TextStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
                   const Text(
                     'Failed to load product.',
                     style: TextStyle(fontSize: 16, color: Colors.red),
